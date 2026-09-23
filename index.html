@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d16">
+  <meta name="description" content="A tiny neon survival arcade. Pilot your ship, dodge the debris, beat your best.">
+  <title>Neon Dodge — Stay in the light.</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./game.js" defer></script>
+</head>
+<body>
+  <main class="arcade">
+    <header class="masthead"><a class="brand" href="./" aria-label="Neon Dodge home"><span class="brand-mark">✳</span> ND<span class="brand-dot">.</span></a><span class="edition">INDEPENDENT ARCADE / 001</span><span class="live"><i></i> SYSTEM ONLINE</span></header>
+    <section class="heading"><div><p class="eyebrow">A GAME OF CLOSE CALLS</p><h1>NEON<span>DODGE</span><sup>™</sup></h1><p class="tagline">One ship. An endless sky. How long can you last?</p></div><div class="orbit" aria-hidden="true">↗</div></section>
+    <section class="console" aria-label="Neon Dodge game">
+      <div class="toolbar"><div class="scores"><div><span>SCORE</span><strong id="score">00000</strong></div><div><span>PERSONAL BEST</span><strong id="best">00000</strong></div></div><div class="actions"><button id="sound" aria-pressed="false" aria-label="Enable sound">SOUND OFF</button><button id="pause" disabled>PAUSE <span>Ⅱ</span></button></div></div>
+      <div class="arena" id="arena">
+        <canvas id="game" width="1000" height="580" aria-label="Game field. Dodge falling obstacles with WASD, arrow keys, or by dragging on the field." aria-describedby="instructions"></canvas>
+        <div class="arena-label" aria-hidden="true"><span>SECTOR 01 / DEEP SPACE</span><span id="level">THREAT: LOW</span></div>
+        <div class="overlay" id="overlay"><div class="intro-icon" aria-hidden="true">△</div><p class="eyebrow" id="overlay-kicker">PILOT, YOU’RE UP.</p><h2 id="overlay-title">Stay in the light.</h2><p id="overlay-copy">Dodge the debris. Chase your best.<br>Every second counts.</p><button class="primary" id="play">LAUNCH GAME <span>↗</span></button><span class="start-hint" id="overlay-hint">WASD / ARROW KEYS TO MOVE</span></div>
+      </div>
+      <div class="console-footer"><span><i class="signal"></i> <span id="status" role="status" aria-live="polite">AWAITING LAUNCH</span></span><span>∞ ENDLESS MODE</span></div>
+    </section>
+    <section class="below" id="instructions"><div><span class="step">01</span><div><h3>MOVE WITH INTENT</h3><p><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrow keys. Drag on touch screens.</p></div></div><div><span class="step">02</span><div><h3>KEEP YOUR DISTANCE</h3><p>Pink is trouble. Stay clear to stay alive.</p></div></div><div><span class="step">03</span><div><h3>BEAT YOURSELF</h3><p>Survive longer. Score higher. Go again.</p></div></div></section>
+    <footer class="page-footer"><span>BUILT FOR THE LOVE OF THE GAME.</span><span>NO DOWNLOADS. JUST DODGE. <span class="mint">✳</span></span></footer>
+  </main>
+</body>
+</html>
