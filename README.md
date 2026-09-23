@@ -10,21 +10,23 @@ A responsive survival arcade made with HTML, CSS, and vanilla JavaScript. Pilot 
 
 ## Play
 
-Select **Start flight**, then dodge the orange squares. Any collision ends the run.
+Select **Let’s play**, then dodge the orange squares. Any collision ends the run.
 
 | Action | Control |
 | --- | --- |
 | Move | WASD or arrow keys |
 | Touch / mouse | Press and drag on the game field; the ship follows your pointer |
 | Pause / resume | P, Escape, or the Pause / Resume button |
-| Restart | Fly again on the result screen |
+| Restart | Play again on the result screen |
 | Sound | Sound toggle; off by default |
 
 The game pauses when its tab becomes hidden or its window loses focus. Resume manually when ready. Touch movement has the same speed cap in every direction; the ship stays inside the field.
 
 ## Visual design
 
-An aviation-manual interface pairs a warm paper frame with a dark green plotted playfield, copper obstacles, and a pale green ship. A custom inline SVG aircraft plan illustrates the start screen. Compact score, elapsed-time, and pause controls keep the playfield prominent. System fonts and locally drawn graphics avoid external requests.
+A full-width arcade layout pairs a graphite playfield with lime controls and coral obstacles. A custom SVG ship illustration fills the start screen, while a sidebar brings the personal best, controls, and creator links together. The layout fills tall and wide desktop viewports and stacks on phones. Reduced-motion preferences disable the idle ship animation. System fonts and locally drawn graphics avoid external requests.
+
+The creator card links to Jhon’s GitHub, LinkedIn, and email through labeled buttons. Gmail uses a `mailto:` link to open the visitor’s configured email app.
 
 ## Features
 
@@ -60,7 +62,7 @@ The workflow deploys only `index.html`, `style.css`, and `game.js`. All asset pa
 ## Project structure and choices
 
 - `index.html`: page structure, accessible controls, and overlay screens.
-- `style.css`: responsive flight-manual layout and reduced-motion styling.
+- `style.css`: responsive full-width arcade layout and reduced-motion styling.
 - `game.js`: Canvas rendering, game state, input, physics, storage, and Web Audio.
 - `.github/workflows/deploy.yml`: static GitHub Pages deployment.
 

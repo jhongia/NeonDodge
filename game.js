@@ -48,9 +48,9 @@
     if (state !== 'playing') return;
     state = 'paused'; keys.clear(); pointer = null; ui.overlay.hidden = false;
     ui.overlay.setAttribute('data-screen', 'paused');
-    ui['overlay-kicker'].textContent = 'ON HOLD'; ui['overlay-title'].textContent = 'Take your time.';
-    ui['overlay-copy'].textContent = 'Your flight will continue when you’re ready.';
-    ui['overlay-hint'].textContent = 'P / ESC TO RESUME'; ui.play.textContent = 'Resume flight →';
+    ui['overlay-kicker'].textContent = 'TAKE A BREATHER'; ui['overlay-title'].textContent = 'Back in a beat.';
+    ui['overlay-copy'].textContent = 'Your score is safe. Jump back in when you’re ready.';
+    ui['overlay-hint'].textContent = 'P / ESC TO RESUME'; ui.play.textContent = 'Keep going →';
     ui.pause.textContent = 'Resume ▷'; ui.status.textContent = 'Flight paused'; ui.play.focus({preventScroll:true});
   }
   function resume() {
@@ -68,10 +68,10 @@
     }
     tone(95, .3, 'sawtooth'); keys.clear(); pointer = null; ui.overlay.hidden = false; ui.pause.disabled = true;
     ui.overlay.setAttribute('data-screen', 'over');
-    ui['overlay-kicker'].textContent = record ? 'PERSONAL BEST' : 'FLIGHT COMPLETE';
-    ui['overlay-title'].textContent = 'That was close.';
-    ui['overlay-copy'].textContent = `${score} points in ${elapsed.toFixed(1)} seconds. ${record ? 'Your best flight yet.' : 'There’s always another flight.'}`;
-    ui['overlay-hint'].textContent = 'A CLEAR FIELD. A FRESH START.'; ui.play.textContent = 'Fly again →';
+    ui['overlay-kicker'].textContent = record ? 'PERSONAL BEST' : 'RUN COMPLETE';
+    ui['overlay-title'].textContent = 'One more run?';
+    ui['overlay-copy'].textContent = `${score} points in ${elapsed.toFixed(1)} seconds. ${record ? 'A new personal best.' : 'You’ve got another one in you.'}`;
+    ui['overlay-hint'].textContent = 'FRESH RUN. SAME AMBITION.'; ui.play.textContent = 'Play again →';
     ui.status.textContent = `Flight complete / ${score} pts`; ui.play.focus({preventScroll:true});
   }
   function spawn() {
@@ -108,11 +108,11 @@
   function draw() {
     ctx.clearRect(0, 0, width, height);
     // A quiet plotted field leaves contrast for the ship and incoming debris.
-    ctx.fillStyle = '#3b514345';
+    ctx.fillStyle = '#51516a55';
     for (let x = 40; x < width; x += 60) {
       for (let y = 40; y < height; y += 60) ctx.fillRect(x, y, 1.5, 1.5);
     }
-    ctx.strokeStyle = '#4e62504d'; ctx.lineWidth = 1;
+    ctx.strokeStyle = '#72729255'; ctx.lineWidth = 1;
     for (let y = 60; y < height - 40; y += 40) {
       const tick = y % 120 === 60 ? 12 : 6;
       ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(tick, y);
@@ -120,7 +120,7 @@
     }
     for (const o of obstacles) {
       ctx.save(); ctx.translate(o.x, o.y); ctx.rotate(o.angle);
-      ctx.fillStyle = '#d6815826'; ctx.strokeStyle = '#e5986e'; ctx.lineWidth = 2;
+      ctx.fillStyle = '#ff876526'; ctx.strokeStyle = '#ff8765'; ctx.lineWidth = 2;
       ctx.fillRect(-o.size / 2, -o.size / 2, o.size, o.size);
       ctx.strokeRect(-o.size / 2, -o.size / 2, o.size, o.size);
       ctx.beginPath(); ctx.moveTo(-o.size / 2 + 5, -o.size / 2 + 5);
@@ -128,15 +128,15 @@
     }
     if (state !== 'over' && state !== 'ready') {
       ctx.save(); ctx.translate(ship.x, ship.y);
-      ctx.shadowColor = '#b8dccd'; ctx.shadowBlur = reducedMotion.matches ? 0 : 8;
-      ctx.fillStyle = '#b8dccd'; ctx.beginPath(); ctx.moveTo(0, -18);
+      ctx.shadowColor = '#d8ff62'; ctx.shadowBlur = reducedMotion.matches ? 0 : 8;
+      ctx.fillStyle = '#d8ff62'; ctx.beginPath(); ctx.moveTo(0, -18);
       ctx.lineTo(13, 13); ctx.lineTo(0, 7); ctx.lineTo(-13, 13); ctx.closePath(); ctx.fill();
-      ctx.shadowBlur = 0; ctx.strokeStyle = '#243e31'; ctx.lineWidth = 2;
+      ctx.shadowBlur = 0; ctx.strokeStyle = '#3d4c16'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(0, -8); ctx.lineTo(0, 4); ctx.stroke(); ctx.restore();
     }
-    particles.forEach(p => { ctx.globalAlpha = p.life / .7; ctx.fillStyle = '#b8dccd'; ctx.fillRect(p.x, p.y, 3, 3); });
+    particles.forEach(p => { ctx.globalAlpha = p.life / .7; ctx.fillStyle = '#d8ff62'; ctx.fillRect(p.x, p.y, 3, 3); });
     ctx.globalAlpha = 1;
-    if (crashTime > 0) { ctx.fillStyle = `rgba(230,152,110,${crashTime * .8})`; ctx.fillRect(0, 0, width, height); }
+    if (crashTime > 0) { ctx.fillStyle = `rgba(255,135,101,${crashTime * .8})`; ctx.fillRect(0, 0, width, height); }
   }
   function frame(time) {
     let dt = Math.min((time-lastTime)/1000,.1); lastTime = time;

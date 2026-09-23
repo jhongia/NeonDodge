@@ -3,51 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#e9e7df">
-  <meta name="description" content="Neon Dodge. A small game of survival. Pilot your ship through falling debris and beat your best flight.">
-  <title>Neon Dodge / Flight practice</title>
+  <meta name="theme-color" content="#111114">
+  <meta name="description" content="Neon Dodge by Jhon. Jump into a fast, free survival arcade. Dodge the debris and set your next high score.">
+  <title>Neon Dodge — One more run.</title>
   <link rel="stylesheet" href="./style.css">
   <script src="./game.js" defer></script>
 </head>
 <body>
   <main class="arcade">
     <header class="masthead">
-      <a class="brand" href="./" aria-label="Neon Dodge home"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 29 28 16 22 3 28Z" fill="currentColor"/><path d="M16 9v12" stroke="#e9e7df" stroke-width="2"/></svg><span>JH / INTERACTIVE</span></a>
-      <span class="edition">A SMALL GAME OF SURVIVAL</span>
-      <a class="source-link" href="https://github.com/jhongia/NeonDodge" target="_blank" rel="noopener noreferrer">View source <span aria-hidden="true">↗</span></a>
+      <a class="brand" href="./" aria-label="Neon Dodge home"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m7 24 6-16h6l-2 9 8-9-6 16h-6l2-9Z" fill="currentColor"/></svg></span><h1>neon<span>dodge</span><i>.</i></h1></a>
+      <span class="edition"><i></i> YOUR NEXT FIVE-MINUTE BREAK</span>
+      <a class="source-link" href="https://github.com/jhongia/NeonDodge" target="_blank" rel="noopener noreferrer">Source code <span aria-hidden="true">↗</span></a>
     </header>
     <div class="workspace">
-      <aside class="briefing" aria-label="Flight briefing">
-        <div class="title-block"><p class="eyebrow">FLIGHT PRACTICE — 01</p><h1>NEON<br>DODGE<span>.</span></h1><p class="description">A little space.<br>A lot to avoid.</p></div>
-        <div class="record"><span class="label">YOUR LONGEST FLIGHT</span><div><strong id="best">00000</strong><span class="unit">PTS</span></div><p>Saved on this device.</p></div>
-        <section class="instructions" id="instructions" aria-label="How to play"><h2 class="label">THE FLIGHT MANUAL</h2><div class="manual-row"><span class="manual-number">01</span><p>Steer with <span class="keyboard"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><br>or the arrow keys.</p></div><div class="manual-row"><span class="manual-number">02</span><p>On a touch screen,<br>drag to guide your ship.</p></div><div class="manual-row"><span class="manual-number">03</span><p>Avoid the orange debris.<br>Earn 10 points per second.</p></div></section>
-        <div class="legend"><span><i class="ship-key"></i>YOU</span><span><i class="debris-key"></i>DEBRIS</span></div>
-      </aside>
       <section class="console" aria-label="Neon Dodge game">
-        <div class="toolbar"><div class="score-readout"><span class="label">FLIGHT SCORE</span><strong id="score">00000</strong></div><div class="time-readout"><span class="label">ELAPSED</span><span id="run-time">00:00</span></div><div class="actions"><button id="sound" aria-pressed="false" aria-label="Enable sound">Sound off</button><button id="pause" disabled>Pause <span aria-hidden="true">Ⅱ</span></button></div></div>
+        <div class="toolbar"><div class="score-readout"><span class="label">SCORE</span><strong id="score">00000</strong></div><div class="time-readout"><span class="label">TIME</span><span id="run-time">00:00</span></div><span class="mode-badge">ENDLESS</span><div class="actions"><button id="sound" aria-pressed="false" aria-label="Enable sound">Sound off</button><button id="pause" disabled>Pause Ⅱ</button></div></div>
         <div class="arena" id="arena">
           <canvas id="game" width="1000" height="700" aria-label="Game field. Dodge falling obstacles with WASD, arrow keys, or by dragging on the field." aria-describedby="instructions"></canvas>
-          <div class="arena-label" aria-hidden="true"><span><i></i> FLIGHT FIELD</span><span id="level">DENSITY / LOW</span></div>
+          <div class="arena-label" aria-hidden="true"><span><i></i> THE PLAYFIELD</span><span id="level">DENSITY / LOW</span></div>
           <div class="overlay" id="overlay" data-screen="ready">
-            <div class="craft-drawing" aria-hidden="true">
-              <svg viewBox="0 0 420 290" fill="none">
-                <g stroke="#46514d" stroke-width="1"><path d="M210 12v260M55 202h310" stroke-dasharray="3 7"/><circle cx="210" cy="149" r="103"/><circle cx="210" cy="149" r="128" stroke-dasharray="1 12"/><path d="M52 62h36M70 44v36M332 236h36M350 218v36M144 55h-33v62M276 55h33v62M144 253h-33v-62M276 253h33v-62"/></g>
-                <path d="m210 52 70 174-70-31-70 31Z" fill="#a9cfc016" stroke="#b8dccd" stroke-width="2"/>
-                <path d="m210 74 35 124-35-16-35 16Z" fill="#b8dccd0d" stroke="#b8dccd"/>
-                <path d="M210 101v54m-8 40-7 29m23-29 7 29" stroke="#b8dccd" stroke-width="2"/>
-                <path d="M268 162h51l25-29h37M152 172H96l-27 34H33" stroke="#d37650"/>
-                <circle cx="268" cy="162" r="3" fill="#d37650"/><circle cx="152" cy="172" r="3" fill="#d37650"/>
-                <g fill="#83938b" font-family="monospace" font-size="8" letter-spacing="1"><text x="318" y="125">SINGLE SEAT</text><text x="25" y="221">NO ARMOUR</text><text x="175" y="282">ND—01 / PLAN</text></g>
+            <div class="hero-art" aria-hidden="true">
+              <svg viewBox="0 0 620 650" fill="none">
+                <defs><linearGradient id="ship-metal" x1="227" y1="150" x2="440" y2="463" gradientUnits="userSpaceOnUse"><stop stop-color="#f8f8f1"/><stop offset="1" stop-color="#9197ac"/></linearGradient><linearGradient id="ship-wing" x1="292" y1="195" x2="427" y2="492" gradientUnits="userSpaceOnUse"><stop stop-color="#d7e0ec"/><stop offset="1" stop-color="#484d64"/></linearGradient><linearGradient id="exhaust" x1="229" y1="459" x2="157" y2="631" gradientUnits="userSpaceOnUse"><stop stop-color="#d8ff62"/><stop offset="1" stop-color="#d8ff62" stop-opacity="0"/></linearGradient></defs>
+                <g stroke="#343441" stroke-width="1"><circle cx="320" cy="323" r="202"/><circle cx="320" cy="323" r="259" stroke-dasharray="3 10"/><path d="M40 323h560M320 32v584" stroke-dasharray="3 9"/></g>
+                <g class="speed-lines" stroke="#5a596d"><path d="m479 39-52 123M554 239l-37 88M113 204l-37 90M422 493l-48 113"/><path d="m189 31-28 68M574 435l-48 113" stroke="#d8ff62"/></g>
+                <g class="hero-craft"><path d="m257 421-42 148-20-16-41 78 50-207Z" fill="url(#exhaust)"/><path d="m308 113 132 354-114-44-81 74-35-78-110 7Z" fill="#050509" opacity=".55" transform="translate(14 18)"/>
+                  <path d="m308 113 132 354-137-65-58 95-35-78-110 7Z" fill="url(#ship-metal)"/>
+                  <path d="m308 113-5 289 137 65Z" fill="url(#ship-wing)"/>
+                  <path d="m308 113-98 306-110 7Z" fill="#eceef0"/>
+                  <path d="m308 113-48 277-15 107-35-78Z" fill="#6c748c"/>
+                  <path d="m308 113-5 289-58 95 15-107Z" fill="#c8cfd7"/>
+                  <path d="m303 213-43 117 21 30 19-30Z" fill="#131520" stroke="#626a85" stroke-width="3"/>
+                  <path d="m304 229-32 95 8 13 15-15Z" fill="#d8ff62"/>
+                  <path d="m159 366 51-49-13 48-57 29Zm171-46 38 56 8 32-47-24Z" fill="#f66f4d"/>
+                  <path d="m262 433-17 38-12-27 6-22Z" fill="#d8ff62"/>
+                  <path d="m307 133 117 313" stroke="#ffffff" stroke-opacity=".65"/>
+                </g>
+                <g transform="translate(487 143) rotate(24)"><path d="M0 0h48v48H0Z" fill="#ff765222" stroke="#ff8765" stroke-width="2"/><path d="m0 0 48 48M0 48 48 0" stroke="#ff8765" stroke-opacity=".4"/></g>
+                <g transform="translate(99 479) rotate(18)"><path d="M0 0h35v35H0Z" fill="#ff765222" stroke="#ff8765" stroke-width="2"/><path d="m0 0 35 35" stroke="#ff8765"/></g>
+                <circle cx="509" cy="467" r="5" fill="#d8ff62"/><path d="M135 122h14m-7-7v14" stroke="#b5b5c7" stroke-width="2"/>
               </svg>
             </div>
-            <div class="overlay-content"><p class="eyebrow" id="overlay-kicker">PRE-FLIGHT CHECK</p><h2 id="overlay-title">Ready for departure.</h2><p id="overlay-copy">Keep clear of the debris.<br>Your only objective is to last.</p><button class="primary" id="play">Start flight <span aria-hidden="true">→</span></button><span class="start-hint" id="overlay-hint">WASD / ARROWS / TOUCH</span></div>
+            <div class="overlay-content"><p class="eyebrow" id="overlay-kicker"><span></span> SMALL SHIP. BIG ENERGY.</p><h2 id="overlay-title">DODGE.<br>DON’T STOP.</h2><p id="overlay-copy">Find your flow through the chaos.<br>Stay alive. Stack points. Go again.</p><button class="primary" id="play">Let’s play <span aria-hidden="true">↗</span></button><span class="start-hint" id="overlay-hint">WASD / ARROWS · DRAG ON TOUCH</span></div>
+            <div class="ready-caption" aria-hidden="true"><span>01 — INFINITE POSSIBILITIES</span><span>NO FINISH LINE. JUST YOU.</span></div>
           </div>
-          <div class="field-coordinates" aria-hidden="true"><span>− X</span><span>Y +</span><span>X +</span></div>
         </div>
-        <div class="console-footer"><span><i class="signal"></i><span id="status" role="status" aria-live="polite">Ready to fly</span></span><span><kbd>P</kbd> / <kbd>ESC</kbd> TO PAUSE</span></div>
+        <div class="console-footer"><span><i class="signal"></i><span id="status" role="status" aria-live="polite">Ready when you are</span></span><span><kbd>P</kbd> / <kbd>ESC</kbd> Pause</span></div>
       </section>
+      <aside class="side-panel" aria-label="Scores, controls, and creator">
+        <section class="record"><div class="record-heading"><span class="label">YOUR PERSONAL BEST</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 3h10v7a5 5 0 0 1-10 0ZM7 5H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4M12 15v5m-5 1h10"/></svg></div><div class="record-value"><strong id="best">00000</strong><span>PTS</span></div><p>The only score you need to beat.</p><div class="record-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></section>
+        <section class="instructions" id="instructions" aria-label="How to play"><div class="section-heading"><h2>Get in the zone.</h2><span>HOW TO PLAY</span></div><div class="keypad" aria-hidden="true"><div><kbd>W</kbd></div><div><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div></div><div class="control-note">WASD or arrow keys to move.<br>On mobile, drag to steer.</div><div class="rules"><div><i class="ship-key"></i><p>Your ship<span>Keep moving. Find the gaps.</span></p></div><div><i class="debris-key"></i><p>The obstacles<span>One hit ends your run.</span></p></div></div><div class="points-note"><strong>+10</strong><span>POINTS FOR EVERY<br>SECOND YOU SURVIVE</span></div></section>
+        <section class="creator"><div class="creator-heading"><span class="avatar" aria-hidden="true">JH<span></span></span><div><p>A little project by</p><h2>Jhon<span>↗</span></h2></div></div><p class="creator-copy">Built for the fun of it.<br>Let’s connect beyond the game.</p><nav class="social-links" aria-label="Connect with Jhon"><a href="https://github.com/jhongia" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.69c-2.78.61-3.37-1.18-3.37-1.18-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.64-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.56c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>GitHub<span>↗</span></a><a href="https://www.linkedin.com/in/jhongarcia1/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3 9h4v12H3Zm7 0h4v1.7c.7-1.2 1.8-2 3.5-2 3 0 3.5 2 3.5 5V21h-4v-6.5c0-1.5-.2-2.5-1.5-2.5S14 13.1 14 14.5V21h-4Z"/></svg>LinkedIn<span>↗</span></a><a href="mailto:jhongxw@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg>Gmail<span>↗</span></a></nav></section>
+      </aside>
     </div>
-    <footer class="page-footer"><span>DESIGNED TO BE PLAYED.</span><span>NEON DODGE <span class="footer-rule">/</span> BY JHON</span><span>NO FINISH LINE.</span></footer>
+    <footer class="page-footer"><span>© 2026 Jhon <span class="footer-dot">·</span> Neon Dodge</span><span>One more run?</span><a href="https://github.com/jhongia/NeonDodge" target="_blank" rel="noopener noreferrer">Explore the project ↗</a></footer>
   </main>
 </body>
 </html>
