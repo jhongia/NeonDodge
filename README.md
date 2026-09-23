@@ -70,7 +70,7 @@ Seeded daily challenges, configurable difficulty, remappable controls, and a non
 
 Automated logic checks passed for launch, survival scoring, pause/resume, blur and visibility pausing, keyboard movement, collision/game over, best-score persistence, restart reset, movement at 30/60/120 Hz, portrait pointer movement and cancellation, blocked-storage fallback, reduced motion, and relative asset paths. JavaScript syntax also passed. These checks used simulated browser APIs; they do not replace real browser tests.
 
-Remaining verification: desktop/mobile visual layout, physical touch input, audio playback, and the live GitHub Pages workflow. The local preview browser blocked file URLs and this environment did not allow a local server, so visual browser testing was unavailable. No GitHub deployment was attempted.
+GitHub Actions successfully deployed the game to GitHub Pages. Live browser checks confirmed the desktop start screen, launch, increasing score, and pause behavior. Physical mobile touch input and audio playback remain unverified.
 
 Workflow configuration reference: [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
