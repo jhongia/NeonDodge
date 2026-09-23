@@ -2,7 +2,7 @@
 
 **One ship. An endless sky. How long can you last?**
 
-A responsive survival arcade made with HTML, CSS, and vanilla JavaScript. Pilot a glowing ship through falling pink debris, earn ten points per second, and chase a personal best as the sky gets busier.
+A responsive survival arcade made with HTML, CSS, and vanilla JavaScript. Pilot a glowing ship through falling orange debris, earn ten points per second, and chase a personal best as the sky gets busier.
 
 **Live demo:** [Play Neon Dodge](https://jhongia.github.io/NeonDodge/).
 
@@ -10,17 +10,21 @@ A responsive survival arcade made with HTML, CSS, and vanilla JavaScript. Pilot 
 
 ## Play
 
-Select **Launch game**, then dodge the pink squares. Any collision ends the run.
+Select **Start flight**, then dodge the orange squares. Any collision ends the run.
 
 | Action | Control |
 | --- | --- |
 | Move | WASD or arrow keys |
 | Touch / mouse | Press and drag on the game field; the ship follows your pointer |
 | Pause / resume | P, Escape, or the Pause / Resume button |
-| Restart | Play again on the result screen |
+| Restart | Fly again on the result screen |
 | Sound | Sound toggle; off by default |
 
 The game pauses when its tab becomes hidden or its window loses focus. Resume manually when ready. Touch movement has the same speed cap in every direction; the ship stays inside the field.
+
+## Visual design
+
+An aviation-manual interface pairs a warm paper frame with a dark green plotted playfield, copper obstacles, and a pale green ship. A custom inline SVG aircraft plan illustrates the start screen. Compact score, elapsed-time, and pause controls keep the playfield prominent. System fonts and locally drawn graphics avoid external requests.
 
 ## Features
 
@@ -56,7 +60,7 @@ The workflow deploys only `index.html`, `style.css`, and `game.js`. All asset pa
 ## Project structure and choices
 
 - `index.html`: page structure, accessible controls, and overlay screens.
-- `style.css`: responsive arcade layout and reduced-motion styling.
+- `style.css`: responsive flight-manual layout and reduced-motion styling.
 - `game.js`: Canvas rendering, game state, input, physics, storage, and Web Audio.
 - `.github/workflows/deploy.yml`: static GitHub Pages deployment.
 

@@ -2,7 +2,7 @@
 (() => {
   const canvas = document.querySelector('#game');
   const ctx = canvas.getContext('2d');
-  const ui = Object.fromEntries(['score','best','pause','sound','overlay','play','status','level','overlay-title','overlay-copy','overlay-kicker','overlay-hint'].map(id => [id, document.getElementById(id)]));
+  const ui = Object.fromEntries(['score','best','pause','sound','overlay','play','status','level','overlay-title','overlay-copy','overlay-kicker','overlay-hint','run-time'].map(id => [id, document.getElementById(id)]));
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const keys = new Set();
   const ship = { x: 500, y: 490, radius: 11 };
@@ -35,25 +35,27 @@
   }
   function updateScore() {
     ui.score.textContent = format(elapsed * 10);
-    ui.level.textContent = `THREAT: ${elapsed < 20 ? 'LOW' : elapsed < 50 ? 'RISING' : 'HIGH'}`;
+    ui.level.textContent = `DENSITY / ${elapsed < 20 ? 'LOW' : elapsed < 50 ? 'RISING' : 'HIGH'}`;
+    ui['run-time'].textContent = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(Math.floor(elapsed % 60)).padStart(2, '0')}`;
   }
   function start() {
     elapsed = 0; spawnClock = 0; obstacles = []; particles = []; keys.clear(); pointer = null;
     ship.x = width / 2; ship.y = height * .82; crashTime = 0;
-    state = 'playing'; ui.overlay.hidden = true; ui.pause.disabled = false; ui.pause.textContent = 'PAUSE Ⅱ';
-    ui.status.textContent = 'FLIGHT ACTIVE'; updateScore(); tone(520, .15); ui.pause.focus({preventScroll:true});
+    state = 'playing'; ui.overlay.hidden = true; ui.pause.disabled = false; ui.pause.textContent = 'Pause Ⅱ';
+    ui.status.textContent = 'Flight in progress'; updateScore(); tone(520, .15); ui.pause.focus({preventScroll:true});
   }
   function pause() {
     if (state !== 'playing') return;
     state = 'paused'; keys.clear(); pointer = null; ui.overlay.hidden = false;
-    ui['overlay-kicker'].textContent = 'TAKE A BREATHER.'; ui['overlay-title'].textContent = 'Holding position.';
-    ui['overlay-copy'].textContent = 'Your run is right where you left it.';
-    ui['overlay-hint'].textContent = 'PRESS P OR ESC TO RESUME'; ui.play.textContent = 'RESUME FLIGHT ↗';
-    ui.pause.textContent = 'RESUME ▷'; ui.status.textContent = 'FLIGHT PAUSED'; ui.play.focus({preventScroll:true});
+    ui.overlay.setAttribute('data-screen', 'paused');
+    ui['overlay-kicker'].textContent = 'ON HOLD'; ui['overlay-title'].textContent = 'Take your time.';
+    ui['overlay-copy'].textContent = 'Your flight will continue when you’re ready.';
+    ui['overlay-hint'].textContent = 'P / ESC TO RESUME'; ui.play.textContent = 'Resume flight →';
+    ui.pause.textContent = 'Resume ▷'; ui.status.textContent = 'Flight paused'; ui.play.focus({preventScroll:true});
   }
   function resume() {
     if (state !== 'paused') return;
-    state = 'playing'; ui.overlay.hidden = true; ui.pause.textContent = 'PAUSE Ⅱ'; ui.status.textContent = 'FLIGHT ACTIVE';
+    state = 'playing'; ui.overlay.hidden = true; ui.pause.textContent = 'Pause Ⅱ'; ui.status.textContent = 'Flight in progress';
     keys.clear(); pointer = null; ui.pause.focus({preventScroll:true});
   }
   function end() {
@@ -65,11 +67,12 @@
       for (let i = 0; i < 22; i++) { const angle = Math.random() * Math.PI * 2, speed = 70 + Math.random() * 220; particles.push({x:ship.x,y:ship.y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:.7}); }
     }
     tone(95, .3, 'sawtooth'); keys.clear(); pointer = null; ui.overlay.hidden = false; ui.pause.disabled = true;
-    ui['overlay-kicker'].textContent = record ? 'A NEW PERSONAL BEST.' : 'SIGNAL LOST.';
-    ui['overlay-title'].textContent = 'One more flight?';
-    ui['overlay-copy'].textContent = `${score} points · ${elapsed.toFixed(1)} seconds survived. Your next best is out there.`;
-    ui['overlay-hint'].textContent = 'EVERY RUN IS A FRESH START'; ui.play.textContent = 'PLAY AGAIN ↗';
-    ui.status.textContent = `RUN COMPLETE — ${score} POINTS`; ui.play.focus({preventScroll:true});
+    ui.overlay.setAttribute('data-screen', 'over');
+    ui['overlay-kicker'].textContent = record ? 'PERSONAL BEST' : 'FLIGHT COMPLETE';
+    ui['overlay-title'].textContent = 'That was close.';
+    ui['overlay-copy'].textContent = `${score} points in ${elapsed.toFixed(1)} seconds. ${record ? 'Your best flight yet.' : 'There’s always another flight.'}`;
+    ui['overlay-hint'].textContent = 'A CLEAR FIELD. A FRESH START.'; ui.play.textContent = 'Fly again →';
+    ui.status.textContent = `Flight complete / ${score} pts`; ui.play.focus({preventScroll:true});
   }
   function spawn() {
     const size = 22 + Math.random() * 30;
@@ -103,15 +106,37 @@
     }
   }
   function draw() {
-    ctx.clearRect(0,0,width,height);
-    ctx.strokeStyle = '#172333'; ctx.lineWidth = 1;
-    for(let x=0;x<width;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,height);ctx.stroke();}
-    for(let y=0;y<height;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(width,y);ctx.stroke();}
-    for(let i=0;i<55;i++){ctx.fillStyle=i%3?'#6688a24d':'#a9ffcf80';ctx.fillRect((i*173+31)%width,(i*97+19)%height,2,2);}
-    for(const o of obstacles){ctx.save();ctx.translate(o.x,o.y);ctx.rotate(o.angle);ctx.shadowColor='#ff638e';ctx.shadowBlur=reducedMotion.matches?0:12;ctx.fillStyle='#381c32';ctx.strokeStyle='#ff638e';ctx.lineWidth=2;ctx.fillRect(-o.size/2,-o.size/2,o.size,o.size);ctx.strokeRect(-o.size/2,-o.size/2,o.size,o.size);ctx.restore();}
-    if(state!=='over') {ctx.save();ctx.translate(ship.x,ship.y);ctx.shadowColor='#a9ffcf';ctx.shadowBlur=reducedMotion.matches?0:22;ctx.fillStyle='#a9ffcf';ctx.beginPath();ctx.moveTo(0,-18);ctx.lineTo(13,13);ctx.lineTo(0,7);ctx.lineTo(-13,13);ctx.closePath();ctx.fill();ctx.fillStyle='#f2fff8';ctx.fillRect(-2,-4,4,9);ctx.restore();}
-    particles.forEach(p=>{ctx.globalAlpha=p.life/.7;ctx.fillStyle='#a9ffcf';ctx.fillRect(p.x,p.y,3,3);});ctx.globalAlpha=1;
-    if(crashTime>0){ctx.fillStyle=`rgba(255,99,142,${crashTime*.8})`;ctx.fillRect(0,0,width,height);}
+    ctx.clearRect(0, 0, width, height);
+    // A quiet plotted field leaves contrast for the ship and incoming debris.
+    ctx.fillStyle = '#3b514345';
+    for (let x = 40; x < width; x += 60) {
+      for (let y = 40; y < height; y += 60) ctx.fillRect(x, y, 1.5, 1.5);
+    }
+    ctx.strokeStyle = '#4e62504d'; ctx.lineWidth = 1;
+    for (let y = 60; y < height - 40; y += 40) {
+      const tick = y % 120 === 60 ? 12 : 6;
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(tick, y);
+      ctx.moveTo(width - tick, y); ctx.lineTo(width, y); ctx.stroke();
+    }
+    for (const o of obstacles) {
+      ctx.save(); ctx.translate(o.x, o.y); ctx.rotate(o.angle);
+      ctx.fillStyle = '#d6815826'; ctx.strokeStyle = '#e5986e'; ctx.lineWidth = 2;
+      ctx.fillRect(-o.size / 2, -o.size / 2, o.size, o.size);
+      ctx.strokeRect(-o.size / 2, -o.size / 2, o.size, o.size);
+      ctx.beginPath(); ctx.moveTo(-o.size / 2 + 5, -o.size / 2 + 5);
+      ctx.lineTo(o.size / 2 - 5, o.size / 2 - 5); ctx.stroke(); ctx.restore();
+    }
+    if (state !== 'over' && state !== 'ready') {
+      ctx.save(); ctx.translate(ship.x, ship.y);
+      ctx.shadowColor = '#b8dccd'; ctx.shadowBlur = reducedMotion.matches ? 0 : 8;
+      ctx.fillStyle = '#b8dccd'; ctx.beginPath(); ctx.moveTo(0, -18);
+      ctx.lineTo(13, 13); ctx.lineTo(0, 7); ctx.lineTo(-13, 13); ctx.closePath(); ctx.fill();
+      ctx.shadowBlur = 0; ctx.strokeStyle = '#243e31'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, -8); ctx.lineTo(0, 4); ctx.stroke(); ctx.restore();
+    }
+    particles.forEach(p => { ctx.globalAlpha = p.life / .7; ctx.fillStyle = '#b8dccd'; ctx.fillRect(p.x, p.y, 3, 3); });
+    ctx.globalAlpha = 1;
+    if (crashTime > 0) { ctx.fillStyle = `rgba(230,152,110,${crashTime * .8})`; ctx.fillRect(0, 0, width, height); }
   }
   function frame(time) {
     let dt = Math.min((time-lastTime)/1000,.1); lastTime = time;
@@ -121,7 +146,7 @@
   }
   ui.play.addEventListener('click',()=>state==='paused'?resume():start());
   ui.pause.addEventListener('click',()=>state==='playing'?pause():resume());
-  ui.sound.addEventListener('click',()=>{sound=!sound;ui.sound.textContent=sound?'SOUND ON':'SOUND OFF';ui.sound.setAttribute('aria-pressed',String(sound));ui.sound.setAttribute('aria-label',sound?'Disable sound':'Enable sound');tone(660,.1);});
+  ui.sound.addEventListener('click',()=>{sound=!sound;ui.sound.textContent=sound?'Sound on':'Sound off';ui.sound.setAttribute('aria-pressed',String(sound));ui.sound.setAttribute('aria-label',sound?'Disable sound':'Enable sound');tone(660,.1);});
   window.addEventListener('keydown',event=>{
     const key=event.key.toLowerCase();
     if(['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d'].includes(key)){if(state==='playing'){event.preventDefault();keys.add(key);}}
