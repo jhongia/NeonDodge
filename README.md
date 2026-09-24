@@ -6,8 +6,6 @@ A responsive survival arcade made with HTML, CSS, and vanilla JavaScript. Pilot 
 
 **Live demo:** [Play Neon Dodge](https://jhongia.github.io/NeonDodge/).
 
-**Gameplay screenshot:** TODO — add `docs/gameplay.png` and replace this line with `![Neon Dodge gameplay](./docs/gameplay.png)`.
-
 ## Play
 
 Select **Let’s play**, then dodge the orange squares. Any collision ends the run.
@@ -54,8 +52,8 @@ Open `http://localhost:8000`. Stop the server with Ctrl+C.
 1. Create a repository and place **the contents of this folder** at its root, including the hidden `.github` folder. `index.html` must be at the repository root.
 2. Commit and push to the `main` branch. If your default branch has a different name, update `.github/workflows/deploy.yml` accordingly.
 3. In repository **Settings → Pages → Build and deployment**, select **GitHub Actions** as the source.
-4. In **Actions**, run **Deploy Neon Dodge to GitHub Pages**, or push a new commit to `main`.
-5. Open the deployment URL shown in the successful workflow. Update the demo placeholder above and add a gameplay screenshot.
+4. In **Actions**, run **Neon Dodge checks and Pages**, or push a new commit to `main`.
+5. Open the deployment URL shown in the successful workflow. If you fork this project, update the live demo link above to your own Pages URL.
 
 The workflow deploys only `index.html`, `style.css`, and `game.js`. All asset paths are relative, so repository subpaths work. No API keys or manually configured secrets are needed; deployment uses GitHub's built-in workflow identity. The included workflow publishes the game whenever changes land on `main`.
 
@@ -83,3 +81,9 @@ Workflow configuration reference: [GitHub Pages custom workflows](https://docs.g
 ## Local files and secrets
 
 `.gitignore` excludes local environment files, common credential files, private keys, editor files, dependencies, logs, and generated output. It keeps example environment templates trackable; include placeholder values only. This browser game needs no API keys. Never place secrets in HTML, CSS, or JavaScript: anything shipped to the browser is public. Ignore rules do not remove files already committed.
+
+## Checks and maintenance
+
+Run `node --check game.js` and `node tests/game.test.cjs` from the repository root. The tests use Node's built-in modules and simulated browser APIs; no packages are required. They cover state transitions, scoring, collisions, movement, pointer cancellation, storage fallback, and relative asset paths.
+
+Pull requests run the read-only `validate` check. Deployment runs only on `main` pushes or manual runs after validation succeeds; pull requests never deploy. All directly referenced actions are pinned to full commit SHAs, and Dependabot opens weekly update pull requests. Only the deployment job receives Pages write and identity-token permissions. Checkout credentials are not persisted.
